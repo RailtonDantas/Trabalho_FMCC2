@@ -6,8 +6,6 @@ class RivestShamirAdleman:
         self.__chave_privada = RSA.generate(size_key)
         self.__chave_publica = self.__chave_privada.public_key()
         self.__key = size_key;
-        print(self.__chave_privada)
-        print(self.__chave_publica)
 
     def encriptar(self,mensagem):
         cifra = PKCS1_OAEP.new(self.__chave_publica)

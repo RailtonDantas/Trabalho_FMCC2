@@ -4,13 +4,14 @@ import os
 import pandas as pd
 import gc
 import statistics
-from algoritmos_criptografia.DES import DataEncryptionStandard
+from algoritmos_criptografia.RSA import RivestShamirAdleman
 
-lista_tamanhos_mensagens = list(range(10000,1010000,10000))
+lista_tamanhos_mensagens = list(range(10000,1000000,10000))
 matriz = []
 for tamanho in lista_tamanhos_mensagens:
     gc.collect()
     print(tamanho)
+
     process = psutil.Process(os.getpid())
     row = []
     msg = "A"*tamanho
@@ -33,7 +34,7 @@ for tamanho in lista_tamanhos_mensagens:
 
         tempo_inicial = time.perf_counter()
 
-        cifra = DataEncryptionStandard("massoni1")
+        cifra = RivestShamirAdleman(size_key=2048)
         dados = cifra.encriptar(msg)
         cifra.decriptar(dados)
 
@@ -72,4 +73,4 @@ for tamanho in lista_tamanhos_mensagens:
     
 
 df = pd.DataFrame(matriz)
-df.to_csv("resultado_DES.csv")
+df.to_csv("resultado_RSA.csv")

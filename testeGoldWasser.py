@@ -7,7 +7,7 @@ import gc
 import statistics
 
 
-lista_tamanhos_mensagens = list(range(1000,1001000,5000))
+lista_tamanhos_mensagens = list(range(10000,1000000,10000))
 matriz = []
 for tamanho in lista_tamanhos_mensagens:
     gc.collect()
@@ -22,40 +22,39 @@ for tamanho in lista_tamanhos_mensagens:
     tempos = []
     memorias = []
 
-    for exe in range(3):
-        gc.collect()
-        time.sleep(0.01)
+    gc.collect()
+    time.sleep(0.01)
 
-        memoria_antes = []
-        for _ in range(5):
-            memoria_antes.append(process.memory_info().rss)
-            time.sleep(0.001)
-        memoria_antes = sum(memoria_antes)/5
+    memoria_antes = []
+    for _ in range(5):
+        memoria_antes.append(process.memory_info().rss)
+        time.sleep(0.001)
+    memoria_antes = sum(memoria_antes)/5
 
-        tempo_inicial = time.perf_counter()
+    tempo_inicial = time.perf_counter()
 
-        key = generate_key()
-        msg_encode = int_encode_str(msg)
+    key = generate_key()
+    msg_encode = int_encode_str(msg)
 
-        dados = encrypt(m=msg_encode,pub_key=key['pub'])
-        dados_decriptados_int = decrypt(dados,priv_key=key['priv'])
-        #dados_decriptados_str = int_decode_str(dados_decriptados_int)
+    dados = encrypt(m=msg_encode,pub_key=key['pub'])
+    dados_decriptados_int = decrypt(dados,priv_key=key['priv'])
+    #dados_decriptados_str = int_decode_str(dados_decriptados_int)
 
-        tempo_final = time.perf_counter()
-        time.sleep(0.01)
-        memoria_depois = []
-        for _ in range(5):
-            memoria_depois.append(process.memory_info().rss)
-            time.sleep(0.001)
-        memoria_depois = sum(memoria_depois)/5
+    tempo_final = time.perf_counter()
+    time.sleep(0.01)
+    memoria_depois = []
+    for _ in range(5):
+        memoria_depois.append(process.memory_info().rss)
+        time.sleep(0.001)
+    memoria_depois = sum(memoria_depois)/5
 
-        tempo_gasto = (tempo_final - tempo_inicial)*1000
-        mem_gasta = (memoria_depois - memoria_antes)/(1024**2)
+    tempo_gasto = (tempo_final - tempo_inicial)*1000
+    mem_gasta = (memoria_depois - memoria_antes)/(1024**2)
 
-        memorias.append(mem_gasta)
-        tempos.append(tempo_gasto)
-        del key,dados,dados_decriptados_int
-        gc.collect()
+    memorias.append(mem_gasta)
+    tempos.append(tempo_gasto)
+    del key,dados,dados_decriptados_int
+    gc.collect()
 
     media_memoria = statistics.median(memorias)
     media_tempos = statistics.median(tempos)
