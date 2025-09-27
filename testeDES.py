@@ -6,7 +6,7 @@ import gc
 import statistics
 from algoritmos_criptografia.DES import DataEncryptionStandard
 
-lista_tamanhos_mensagens = list(range(1000,5500000,10000))
+lista_tamanhos_mensagens = list(range(0,1000000,5000))
 matriz = []
 for tamanho in lista_tamanhos_mensagens:
     gc.collect()

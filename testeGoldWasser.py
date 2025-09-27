@@ -7,7 +7,7 @@ import gc
 import statistics
 
 
-lista_tamanhos_mensagens = list(range(1000,1003000,2000))
+lista_tamanhos_mensagens = list(range(1000,1001000,5000))
 matriz = []
 for tamanho in lista_tamanhos_mensagens:
     gc.collect()
